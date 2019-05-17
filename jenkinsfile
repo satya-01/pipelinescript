@@ -1,0 +1,27 @@
+
+node {
+ stage('download git') {
+git 'https://github.com/satya-01/maven-repo.git'
+}
+
+ stage('clean') {
+sh label: '', script: 'mvn clean'
+}
+
+ stage('compile') {
+sh label: '', script: 'mvn compile'
+}
+
+ stage('code quality') { 
+sh label: '', script: 'mvn sonar:sonar -Dsonar.host.url=http://35.244.55.9:9000  -Dsonar.login=bd24030d89030ebcebb36750320b7ff5a37af44b'
+
+}
+
+ stage('package') {
+ sh label: '', script: 'mvn package'
+ }
+ 
+ stage('deploy') { 
+sh label: '', script: 'mvn deploy'
+}
+}
